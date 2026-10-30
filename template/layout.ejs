@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="canonical" href="https://joeyday.com<%= url %>">
+    <link rel="stylesheet" href="https://use.typekit.net/lkn6tyl.css">
+    <link rel="stylesheet" href="/asset/style.css?<%= cacheBust %>">
+    <link rel="icon" href="/asset/favicon.svg?<%= cacheBust %>" type="image/svg+xml">
+    <link rel="alternate" type="application/atom+xml" title="Joey Day" href="/feed.xml">
+    <link rel="me" href="https://puritan.pub/@joeyday">
+    <link rel="me" href="https://mastodon.social/@joeyday">
+    <link rel="me" href="https://social.sndevs.com/@joeyday">
+    <meta property="og:site_name" content="Joey Day">
+    <meta property="og:type" content="<%= type %>">
+    <meta property="og:title" content="<%= pageTitle %>">
+    <meta property="og:url" content="https://joeyday.com<%= url %>">
+<% if (description) { %>    <meta name="description" content="<%= description %>">
+    <meta property="og:description" content="<%= description %>">
+<% } %></head>
+<body>
+    <div class="site">
+        <header class="site-header">
+            <div class="site-branding">
+                <img src="/assets/images/avatar.png" class="avatar">
+                <p class="blurb">Hi, I’m Joey. I’m a 40-something software engineer (read: big nerd) in Salt Lake City. When I grow up I’d like to be a seminary professor (read: even bigger nerd).</p>
+            </div>
+            <nav class="site-navigation">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="https://mastodon.social/@joeyday">Mastodon</a></li>
+                    <li><a href="http://twitter.com/joeyday">Twitter</a></li>
+                    <li><a href="http://facebook.com/joeynday">Facebook</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="site-content">
+<%- content %>
+        </main>
+        <footer class="site-footer">Copyright © 2002–<%= year %> Joey Day</footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+/* ─── Joey Day ──────────────────────────────────────────────────────────────────
+   Colors are OKLCH variables on :root; the dark theme only redefines them. The palette was
+   drawn from Joey's avatar: the orange of the masthead and links, the blue of titles. */
+
+:root {
+  --text: oklch(0.159 0.007 179);
+  --muted: oklch(0.45 0.01 179);
+  --page: oklch(1 0 0);
+  --site: oklch(0.996 0.006 197);
+  --accent: oklch(0.667 0.224 36);
+  --accent-hover: oklch(0.559 0.228 29);
+  --on-accent: oklch(1 0 0);
+  --blue: oklch(0.688 0.157 248);
+  --blue-hover: oklch(0.6 0.15 255);
+  --blue-wash: oklch(0.688 0.157 248 / 0.07);
+  --blue-mark: oklch(0.688 0.157 248 / 0.25);
+  --rule: oklch(0.8 0.02 248);
+
+  --serif: "ff-meta-serif-web-pro", Georgia, serif;
+  --serif-sc: "ff-meta-serif-sc-web-pro", Georgia, serif;
+  --sans: "ff-meta-web-pro", sans-serif;
+  --mono: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  --measure: 34em;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: oklch(0.92 0.01 179);
+    --muted: oklch(0.7 0.01 179);
+    --page: oklch(0.2 0.01 230);
+    --site: oklch(0.17 0.01 230);
+    --accent: oklch(0.72 0.19 40);
+    --accent-hover: oklch(0.8 0.17 45);
+    --blue: oklch(0.75 0.12 248);
+    --blue-hover: oklch(0.83 0.1 248);
+    --blue-wash: oklch(0.75 0.12 248 / 0.1);
+    --blue-mark: oklch(0.75 0.12 248 / 0.3);
+    --rule: oklch(0.4 0.03 248);
+  }
+}
+
+/* ─── Base ─── */
+
+*, ::before, ::after { box-sizing: border-box; }
+
+/* The text scales with the window from a phone up to a 22px page, as it always has. */
+html {
+  font-size: clamp(16px, 2.941vw, 22px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--serif);
+  font-feature-settings: "kern", "liga", "onum";
+  line-height: 1.5;
+}
+
+.site { min-height: 100vh; background: var(--site); display: flex; flex-direction: column; }
+main { flex: 1; }
+
+a { color: var(--accent); }
+a:hover, a:focus, a:active { color: var(--accent-hover); }
+
+p, li, dt, dd, blockquote { hyphens: auto; hanging-punctuation: first; }
+p { margin: 0 0 1em; }
+img, iframe, video, embed, object { max-width: 100%; }
+img { height: auto; }
+a img { border: 0; }
+hr { width: 33%; margin: 1.5em auto; border: 0; border-top: 1px solid var(--rule); }
+
+abbr[title] { text-decoration: none; }
+p abbr { font-family: var(--serif-sc); text-transform: lowercase; font-size: 1.05em; }
+
+h1, h2, h3, h4, h5, h6 { clear: both; margin: 0 0 1rem; }
+h1, h2, h3, .subtitle {
+  font-family: var(--sans);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+h1 { font-size: 2.618em; line-height: 1.25; color: var(--blue); text-align: center; }
+h2 { font-size: 1.618em; }
+h3 { font-size: 1.236em; }
+h1 a { color: inherit; text-decoration: none; }
+h1 a:hover, h1 a:focus { color: var(--blue-hover); text-decoration: underline; }
+
+blockquote {
+  margin: 0 1.25em 1em;
+  padding: 0 1.25em;
+  border-left: 3px solid var(--blue);
+  font-style: italic;
+}
+blockquote em, blockquote i { font-style: normal; }
+
+pre {
+  max-width: 100%;
+  margin: 1.6em;
+  padding: 1.6em;
+  overflow: auto;
+  border: 1px dashed var(--blue);
+  background: var(--blue-wash);
+  line-height: 1.6;
+}
+pre, code, kbd, samp { font: 0.7em var(--mono); font-feature-settings: normal; }
+pre code { font-size: inherit; }
+
+mark, ins { background: linear-gradient(transparent 50%, var(--blue-mark) 50%); color: inherit; }
+
+table { border-collapse: collapse; font-size: 80%; }
+th, td { border: 1px solid var(--rule); padding: 0.5em; text-align: left; vertical-align: top; }
+th { background: var(--blue-wash); }
+tr:nth-of-type(odd) { background: var(--blue-wash); }
+.table-scroll { overflow-x: auto; margin-bottom: 1em; }
+
+.broken { color: var(--accent-hover); text-decoration: line-through; }
+
+/* ─── Masthead and navigation ─── */
+
+.site-header {
+  margin-bottom: 2em;
+  padding: 1em;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.site-header a, .site-header a:hover, .site-header a:focus { color: var(--on-accent); }
+.site-header > * { max-width: var(--measure); margin-inline: auto; }
+.site-branding { display: flex; gap: 0.75em; align-items: flex-start; }
+.avatar { width: 4em; height: 4em; border-radius: 50%; flex: none; margin-top: 0.25em; }
+.blurb { margin: 0; }
+.site-navigation { margin-top: 1em; text-align: center; }
+.site-navigation ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1em; margin: 0; padding: 0; list-style: none; }
+
+.site-content { width: 100%; max-width: var(--measure); margin-inline: auto; padding: 1em; }
+
+/* ─── Posts ─── */
+
+.post { margin: 0 0 3em; }
+.post-meta { text-align: center; }
+.subtitle { margin: 0 0 1em; text-align: center; font-weight: normal; font-size: 1.236em; }
+.post-body { margin-top: 1.5em; }
+.post-body::after { content: ""; display: block; clear: both; }
+
+figure { margin: 0 0 1.5em; max-width: 100%; }
+figure img { display: block; margin-inline: auto; }
+figure p, figcaption p { margin: 0; }
+figcaption { margin: 0.8em 0; padding: 0.8em 0; border-block: 1px solid var(--rule); font-size: 0.764em; font-style: italic; text-align: center; }
+
+/* With room to spare, a caption hangs in the margin beside its picture. */
+@media (min-width: 75em) {
+  .site-content figure { position: relative; }
+  .site-content figcaption { position: absolute; top: 0; width: 12.125em; margin: 0; }
+  .site-content figure:not(.alignright) figcaption { left: -13.625em; }
+  .site-content figure.alignright figcaption { right: -13.625em; }
+}
+
+.alignleft { float: left; margin: 0.5em 1.5em 0.5em 0; }
+.alignright { float: right; margin: 0.5em 0 0.5em 1.5em; }
+.aligncenter { display: block; clear: both; margin-inline: auto; }
+figure.alignleft, figure.alignright, img.alignleft, img.alignright { max-width: 45%; }
+
+.lpic, .rpic { max-width: 45%; margin: 0.5em 0 0.5em 0; }
+.lpic { float: left; margin-right: 1.5em; }
+.rpic { float: right; margin-left: 1.5em; }
+.pic { clear: both; margin: 0 0 1.5em; text-align: center; }
+.lpic figure, .rpic figure, .pic figure { margin: 0; }
+.filetile { margin: 0 0 1em; padding: 0.5em 1em; border: 1px solid var(--rule); border-radius: 0.3em; background: var(--blue-wash); font-size: 0.8em; line-height: 1.4; }
+.filetile p { margin: 0; }
+.donate { margin: 0 0 1em; padding: 0.5em 1em; border: 1px solid var(--accent); border-radius: 0.3em; text-align: center; }
+.donate p { margin: 0; }
+
+.endmark { width: 0.7em; vertical-align: -0.0625em; border-radius: 50%; }
+
+.footnotes { font-size: 0.764em; }
+.footnotes h2 { font-size: 1.236em; }
+.footnote-ref { font-size: 0.764em; }
+.footnote-ref a { text-decoration: none; }
+
+.pagination { display: flex; justify-content: space-between; gap: 1em; margin-bottom: 2em; }
+.pagination .older { margin-right: auto; }
+.pagination .newer { margin-left: auto; text-align: right; }
+
+.site-footer { padding: 1em; text-align: center; font-size: 0.764em; font-family: var(--sans); text-transform: uppercase; }
+
+@media print {
+  .site-header, .pagination { display: none; }
+  a { color: inherit; }
+}

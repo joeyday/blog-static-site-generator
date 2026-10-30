@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+
+# A local copy of the content repo, for testing
+vault/
