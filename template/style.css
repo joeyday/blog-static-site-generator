@@ -133,6 +133,13 @@ tr:nth-of-type(odd) { background: var(--blue-wash); }
 .site-navigation { margin-top: 1em; text-align: center; }
 .site-navigation ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1em; margin: 0; padding: 0; list-style: none; }
 
+/* On a narrow screen the content comes first and the masthead drops to the bottom. */
+@media (max-width: 37.5em) {
+  .site { display: flex; flex-direction: column; }
+  .site-header { order: 1; margin: 2em 0 0; }
+  .site-footer { order: 2; }
+}
+
 .site-content { width: 100%; max-width: var(--measure); margin-inline: auto; padding: 1em; }
 
 /* ─── Posts ─── */
