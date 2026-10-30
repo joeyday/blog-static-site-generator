@@ -28,6 +28,7 @@ Settled questions, so they aren't re-litigated. Each says who decided and when.
 
 - **A title may opt a word out with `!`** (2026-10-29): `title: '!ANNOUNCEMENT'` (quoted, since YAML reads a bare `!` as a tag). The page's heading is checked like any text; the `<title>`, link previews and feed show the title without the `!`.
 - **The WordPress comments are not kept** (Joey, 2026-10-29); the backup has them. The WordPress drafts were put in `draft/` for Joey to keep or delete.
+- **A bare number after a semicolon is a chapter** (2026-10-30, from pgen and tsgen): `Heb 4:2; 11` is Heb 4:2 and all of Heb 11; after a comma it is a verse, `Heb 4:2, 11`. A chapter the book doesn't have fails the build.
 - **Dead links inside the site stay as they are for now** (Joey, 2026-10-29).
 
 ## Look
