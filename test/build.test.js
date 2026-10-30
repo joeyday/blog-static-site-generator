@@ -138,6 +138,12 @@ describe('pages and static files', { concurrency: true }, () => {
     assert.match(await b.read('/about/'), /src="\/assets\/images\/photo\.png" alt="A photo"/)
     assert.ok(await b.exists('/assets/images/photo.png'))
   })
+
+  test('an image embed can float left or right', async () => {
+    const b = await build({ 'About.md': page('![[photo.png|200|right]] Text.'), 'image/photo.png': 'x' })
+    assert.equal(b.code, 0, b.output)
+    assert.match(await b.read('/about/'), /<img src="\/assets\/images\/photo\.png" alt="A photo" class="alignright" width="200">/)
+  })
 })
 
 describe('the pipeline', { concurrency: true }, () => {

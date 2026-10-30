@@ -25,7 +25,7 @@ It is a sibling of `../pgen` (the Papers generator) and `../tsgen` (Tota Scriptu
 - `post/YYYY/YYYY-MM-DD-slug.md`: a post. Frontmatter: `title`, `date` (a day, or a full timestamp with offset; the address and the dates shown are in UTC and must agree with the file name), and optionally `subtitle`, `author` (shown as "By guest author X" unless Joey), `categories`, `tags`, `description`, plus the WordPress leftovers `id`, `guid`, `dsq_thread_id`, `enclosure`. Address: `/YYYY/MM/DD/slug/`. A post is cut at `<!--more-->` on the home page.
 - Any other Markdown file outside `post/`, `partial/`, `image/`, `static/`, `draft/` is a page (`About.md` is `/about/`; `404.md` is `/404.html`). `hidden: true` leaves a page or post out.
 - `partial/name.md`: `{{name|arg}}` expands it (`{{1}}` is the first argument). `{{endmark}}` is the end mark.
-- `image/`: pictures, flat, served from `/assets/images/` (the old address). Embed with `![[name.png]]` (`|300` or `|300x200` for a size); every image needs an entry in `alt-text.json`.
+- `image/`: pictures, flat, served from `/assets/images/` (the old address). Embed with `![[name.png]]` (`|300` or `|300x200` for a size, then `|left` or `|right` to float it); every image needs an entry in `alt-text.json`.
 - `static/`: copied as it is to the site root (`resume/`, `supercut/`, `docs/`). `draft/`: not built.
 - `abbreviations.json`, `initials.json` (a person's initials by `"R.C. Sproul"`; other initials like `U.S.` go in `abbreviations.json`), `alt-text.json`: all required.
 - Links between posts are wikilinks: `[[2004-10-03-towards-parity|text]]`, or by title when it is unique.
