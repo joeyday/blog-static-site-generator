@@ -146,6 +146,27 @@ describe('pages and static files', { concurrency: true }, () => {
   })
 })
 
+describe('archives', { concurrency: true }, () => {
+  test('each year and month gets its own paginated pages', async () => {
+    const files = {}
+    for (let d = 1; d <= 6; d++) files[`post/2004/2004-10-0${d}-p${d}.md`] = post(`Body ${d}.`, { title: `P${d}`, date: `2004-10-0${d}` })
+    files['post/2004/2004-03-01-old.md'] = post('Old.', { title: 'Old', date: '2004-03-01' })
+    const b = await build(files)
+    assert.equal(b.code, 0, b.output)
+    const year = await b.read('/2004/')
+    assert.match(year, /P6[\s\S]*P2/)
+    assert.doesNotMatch(year, /P1\b/)
+    assert.match(year, /href="\/2004\/page\/2\/"/)
+    const page2 = await b.read('/2004/page/2/')
+    assert.match(page2, /P1\b/)
+    assert.match(page2, /Old/)
+    assert.match(await b.read('/2004/10/'), /href="\/2004\/10\/page\/2\/"/)
+    assert.match(await b.read('/2004/10/page/2/'), /P1\b/)
+    assert.match(await b.read('/2004/03/'), /Old/)
+    assert.equal(await b.exists('/2004/03/page/2/'), false)
+  })
+})
+
 describe('the pipeline', { concurrency: true }, () => {
   test('a Scripture reference links, a ! opts one out, one that cannot exist fails', async () => {
     const b = await build({ 'A.md': page('See John 3:16 KJV and !Romans 17.') })

@@ -158,22 +158,35 @@ async function build ({ outputDir = OUTPUT_DIR } = {}) {
 
   // The home page and /page/N/: the newest posts, a few at a time, each cut at its <!--more-->.
   // Their text is checked on the posts' own pages, so these pages keep quiet about it.
-  const pageCount = Math.max(1, Math.ceil(rendered.length / POSTS_PER_PAGE))
-  const pageUrl = (n) => n === 1 ? '/' : `/page/${n}/`
-  for (let n = 1; n <= pageCount; n++) {
-    const articles = rendered.slice((n - 1) * POSTS_PER_PAGE, n * POSTS_PER_PAGE)
-      .map(({ post, body, excerpt }) => articleHtml(post, (excerpt ?? body).replace(MORE, ''), { excerpt: excerpt !== null }))
-    const nav = [
-      n < pageCount ? `<a class="older" href="${pageUrl(n + 1)}">‹ Older posts</a>` : '',
-      n > 1 ? `<a class="newer" href="${pageUrl(n - 1)}">Newer posts ›</a>` : ''
-    ].join('')
-    const url = pageUrl(n)
-    const html = renderLayout(`${articles.join('\n')}\n<nav class="pagination" aria-label="Posts">${nav}</nav>`, {
-      url,
-      title: n === 1 ? SITE_TITLE : `Page ${n}`,
-      description: SITE_DESCRIPTION
-    })
-    await output.writeFile(path.join(url, 'index.html'), output.process(html, url, true))
+  const paginate = async (items, base, title, description) => {
+    const pageCount = Math.max(1, Math.ceil(items.length / POSTS_PER_PAGE))
+    const pageUrl = (n) => n === 1 ? base : `${base}page/${n}/`
+    for (let n = 1; n <= pageCount; n++) {
+      const articles = items.slice((n - 1) * POSTS_PER_PAGE, n * POSTS_PER_PAGE)
+        .map(({ post, body, excerpt }) => articleHtml(post, (excerpt ?? body).replace(MORE, ''), { excerpt: excerpt !== null }))
+      const nav = [
+        n < pageCount ? `<a class="older" href="${pageUrl(n + 1)}">‹ Older posts</a>` : '',
+        n > 1 ? `<a class="newer" href="${pageUrl(n - 1)}">Newer posts ›</a>` : ''
+      ].join('')
+      const url = pageUrl(n)
+      const html = renderLayout(`${articles.join('\n')}\n<nav class="pagination" aria-label="Posts">${nav}</nav>`, {
+        url,
+        title: n === 1 ? title : base === '/' ? `Page ${n}` : `${title}, page ${n}`,
+        description
+      })
+      await output.writeFile(path.join(url, 'index.html'), output.process(html, url, true))
+    }
+  }
+  await paginate(rendered, '/', SITE_TITLE, SITE_DESCRIPTION)
+
+  // The archives, not linked from anywhere yet: /YYYY/ and /YYYY/MM/, paginated the same way.
+  const years = Map.groupBy(rendered, ({ post }) => post.day.slice(0, 4))
+  for (const [year, inYear] of years) {
+    await paginate(inYear, `/${year}/`, year, SITE_DESCRIPTION)
+    for (const [month, inMonth] of Map.groupBy(inYear, ({ post }) => post.day.slice(5, 7))) {
+      const name = new Date(Date.UTC(Number(year), Number(month) - 1)).toLocaleString('en-US', { month: 'long', timeZone: 'UTC' })
+      await paginate(inMonth, `/${year}/${month}/`, `${name} ${year}`, SITE_DESCRIPTION)
+    }
   }
 
   const failures = []
