@@ -196,6 +196,13 @@ describe('the pipeline', { concurrency: true }, () => {
     assert.match(html, /<abbr title="English Standard Version">ESV<\/abbr>/)
   })
 
+  test('a ! opts a Roman numeral out of the small caps and is dropped', async () => {
+    const b = await build({ 'A.md': page('Chapter !XIV and XIV.') })
+    assert.equal(b.code, 0, b.output)
+    const html = await b.read('/a/')
+    assert.match(html, /Chapter XIV and <span class="roman-num">XIV<\/span>\./)
+  })
+
   test('an unexplained all-caps word, or initials, or an image fail the build', async () => {
     assertFails(await build({ 'A.md': page('NASA') }), /NASA is not in abbreviations\.json/)
     assertFails(await build({ 'A.md': page('J.K. Rowling') }), /initials "J\.K\." need an entry/)

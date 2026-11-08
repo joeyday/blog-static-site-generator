@@ -29,4 +29,4 @@ It is a sibling of `../pgen` (the Papers generator) and `../tsgen` (Tota Scriptu
 - `static/`: copied as it is to the site root (`resume/`, `supercut/`, `docs/`). `draft/`: not built.
 - `abbreviations.json`, `initials.json` (a person's initials by `"R.C. Sproul"`; other initials like `U.S.` go in `abbreviations.json`), `alt-text.json`: all required.
 - Links between posts are wikilinks: `[[2004-10-03-towards-parity|text]]`, or by title when it is unique.
-- Scripture: abbreviations without a space for numbered books (`1Co`, `2Ti`); `!` opts a reference or all-caps word out.
+- Scripture: abbreviations without a space for numbered books (`1Co`, `2Ti`); `!` opts a reference, all-caps word or Roman numeral out.
