@@ -35,6 +35,16 @@ See “Hivelogic”:http://www.hivelogic.com/a\\_b. And [a post](http://www.joey
 
 ![A photo](http://joeyday.com/wp-content/uploads/2004/10/photo.png "Title") and ![](/assets/images/local.png) {% include endmark.html %}
 
+==
+
+<div class="pic">
+
+![A photo](/assets/images/local.png)
+
+</div>
+
+==
+
 {% highlight javascript %}
 const a = \\[1];
 {% endhighlight %}
@@ -68,6 +78,7 @@ test('the migration moves, rewrites and reports', async () => {
     assert.match(post, /\[\[2004-10-04-second\|again\]\]/)
     assert.match(post, /!\[\[2004-10-photo\.png\]\]/)
     assert.match(post, /!\[\[local\.png\]\]\{\{endmark\}\}/)
+    assert.doesNotMatch(post, /^==$/m)
     assert.match(post, /```javascript\nconst a = \\\[1\];\n```/)
     assert.match(await read('post/2004/2004-10-04-second.md'), /Text\{\{endmark\}\}/)
 

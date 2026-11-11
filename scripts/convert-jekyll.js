@@ -302,6 +302,8 @@ function convertBody (body, where) {
   const images = []
   body = body.replace(/\[(!\[[^\]]*\]\([^)]*endmark[^)]*\))\]\([^)]*\)/gi, '$1')
   body = body.replace(/[ \t]*\{%\s*include\s+endmark\.html\s*%\}/g, () => '@@ENDMARK@@')
+  // Textile's `==` lines fenced raw HTML off from Textile; Markdown has no use for them.
+  body = body.replace(/^==[ \t]*\n/gm, '')
   if (body.includes('<div')) body = splitDivs(body)
   if (body.includes('<figure')) body = splitFigures(body)
   body = convertBlocks(body, where)
